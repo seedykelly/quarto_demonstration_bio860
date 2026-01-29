@@ -60,6 +60,8 @@ load(file ="data/mean.devtime.brms.Rds")
 
 ## ---- plot_table ----
 
+### PLOT ###
+
 sex.labs <- c("Females", "Males")
 names(sex.labs) <- c("female", "male")
 
@@ -133,6 +135,11 @@ devtime.plot <- ggplot(devtime.data, aes(x=density, y=yvar, shape=diet, group=di
   geom_text(data = devtime.data, aes(x=density, y=LCL, label = n), vjust = 1.5, size=2.5) +
   ylim(c(48,74))
 ggsave(devtime.plot, filename="figure_1.jpg", width=10.83, height=10.83, dpi=300,antialias="default")  
+
+### TABLE ###
+
+
+
 
 
 ## ---- end
