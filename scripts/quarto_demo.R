@@ -54,6 +54,7 @@ library(ggside)
 ## ---- data_prep ----
 
 load(file ="data/mean.sex.data.Rda")
+load(file ="data/plasticity.table.Rda")
 load(file ="data/mean.devtime.brms.Rds")
 
 ## ---- end
@@ -138,8 +139,13 @@ ggsave(devtime.plot, filename="figure_1.jpg", width=10.83, height=10.83, dpi=300
 
 ### TABLE ###
 
+plasticity.table
 
-
-
+new_row1<-c("(a) Low density", "", "","","","","","","")
+plasticity.table<-InsertRow(plasticity.table,NewRow=new_row1, RowNum=1)
+new_row2<-c("(b) Medium density", "", "","","","","","","")
+plasticity.table<-InsertRow(plasticity.table,NewRow=new_row2, RowNum=5)
+new_row3<-c("(c) High density", "", "","","","","","","")
+plasticity.table<-InsertRow(plasticity.table,NewRow=new_row3, RowNum=9)
 
 ## ---- end
