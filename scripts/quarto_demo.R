@@ -54,18 +54,21 @@ library(ggside)
 ## ---- data_prep ----
 
 load(file ="data/mean.sex.data.Rda")
+load(file ="data/mean.devtime.brms.Rds")
 
 ## ---- end
 
 ## ---- plot_table ----
 
+sex.labs <- c("Females", "Males")
+names(sex.labs) <- c("female", "male")
 
 # devtime
 mean.devtime.brms <- brm(dev_time ~ sex*diet*density + (1 | id_mere),
                          data = mean.sex.data, warmup = 500, iter = 3000, thin=2,
                          control = list(max_treedepth = 15, adapt_delta = 0.99),
                          sample_prior = TRUE,
-                         file = "data/processed/mean.devtime.brms.Rds",
+                         file = "data/mean.devtime.brms.Rds",
                          chains = 4, seed = 12345, cores = 4)
 summary(mean.devtime.brms)
 conditional_effects(mean.devtime.brms)
@@ -111,7 +114,7 @@ devtime.plot <- ggplot(devtime.data, aes(x=density, y=yvar, shape=diet, group=di
   geom_point(size = 3) +
   geom_errorbar(aes(ymin = LCL, ymax = UCL), width=0.0) +
   geom_line() +
-  xlab("") +
+  xlab("Rearing density") +
   ylab("Predicted mean (95% CrI)\ndevelopment time (d)") +
   stat_pvalue_manual(dev.pvalues, label = "p.adj", size=2.5, tip.length = 0.01,inherit.aes = FALSE, remove.bracket = FALSE, bracket.shorten = .05) +
   facet_grid(~sex,labeller = labeller(sex = sex.labs)) +
@@ -129,6 +132,7 @@ devtime.plot <- ggplot(devtime.data, aes(x=density, y=yvar, shape=diet, group=di
         strip.background = element_rect(fill = "white")) +
   geom_text(data = devtime.data, aes(x=density, y=LCL, label = n), vjust = 1.5, size=2.5) +
   ylim(c(48,74))
+ggsave(devtime.plot, filename="figure_1.jpg", width=10.83, height=10.83, dpi=300,antialias="default")  
 
 
 ## ---- end
