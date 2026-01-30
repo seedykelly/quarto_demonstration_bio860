@@ -1,12 +1,6 @@
 ---
-title: "Genotype-by-environment effect of rearing environment on adult morphologyin European earwigs."
+title: "Quarto demonstration."
 authors:
-  - name: Céline Ozkan
-    affiliations:
-      - ref: co
-    corresponding: false
-    email: celine.ozkan@etu.univ-lyon1.fr
-    orcid: 
   - name: Clint D. Kelly
     affiliations:
       - ref: cdk
@@ -17,8 +11,6 @@ authors:
 affiliations:
   - id: cdk
     name: Département des Sciences biologiques, Université du Québec à Montréal, Montréal, Canada
-  - id: co
-    name: Université Claude Bernard Lyon 1, Lyon, France
 
 filters:
   - authors-block
@@ -36,19 +28,16 @@ csl: evolution.csl
 ---
 
 ```{r echo=FALSE}
-knitr::read_chunk('scripts/2025_earwig_gxe.R')
+knitr::read_chunk('scripts/quarto_demo.R')
 ```
 
 ```{r libraries, include=FALSE,echo=FALSE, warning=FALSE, results="hide"}
 ```
 
-```{r data_load, echo=FALSE, warning=FALSE, results="hide", include=FALSE}
+```{r data_prep, echo=FALSE, warning=FALSE, results="hide", include=FALSE}
 ```
 
-```{r data_analysis, echo=FALSE, warning=FALSE, results="hide", include=FALSE}
-```
-
-```{r means, echo=FALSE, warning=FALSE, results="hide", include=FALSE}
+```{r plot_table, echo=FALSE, warning=FALSE, results="hide", include=FALSE}
 ```
 
 \newpage
@@ -65,81 +54,16 @@ knitr::read_chunk('scripts/2025_earwig_gxe.R')
 
 ### Statistical analysis
 
-Need to provide detail of number of families and offspring in study. 
-
-For all analyses, only families with offspring records from both diets were included. Filtration was performed separately for each rearing density (see @Table 2 for final sample sizes). Statistical anayles were based on Final number of families and total offspring at each density for females 
-
-We used mixed effects (intercept-only) models to assess the effects of sex, diet and density on trait size. A separate model was run for each of pronotum length, absolute forceps length and relative forceps length. Each model included sex (two levels), diet (two levels), and density (three levels) as fixed factors, and family ID as a random term. We used ANCOVA to test the effect of our experimental factors on relative forceps length by including pronotum length as a covariate.
-
-We used a multivariate mixed effects (intercept-only) model to assess the interactive effects of male morph, diet and density on pronotum length, absolute forceps length and relative forceps length. Our model included all three traits as the response variable, morph (wo levels), diet (two levels), and density (three levels) as fixed factors, and family ID as a random term.
-
-All models were run using *brms* chains, iterations etc. Post-hoc contrasts were preformed using *emmeans*.
+Post-hoc contrasts are claculated wuing the R package *emmeans* [@lenth2019package].
 
 # Results
 
-### Effect of sex, diet and density on trait expression
+## Sex difference in development time
 
-## Mean-level effects on trait expression
-Our analyses are based on `r total.num.families[1]` families and `r total.num.offspring[1]` offspring; sample size for each sex-density-diet factorial combination is given in @fig-one.
-
-Earwig development time was not affected by a three-way interaction between sex, diet and density (Table Sx; @fig-one a). We did, however, find a two-way interaction between diet and density (Estimate = `r myround(mean.devtime.brms_fixed[[10,4]],2)` \[`r myround(mean.devtime.brms_fixed[[10,6]],2)`, `r myround(mean.devtime.brms_fixed[[10,7]],2)`\]) that was driven by high density earwigs on a poor diet requiring more time than expected to reach adulthood (interaction contrast: low density vs medium density: $\Delta$$\overline{x}$ = `r myround(summary(mean.devtime.brms.em.contrast)[1,3],2)` \[`r myround(summary(mean.devtime.brms.em.contrast)[1,4],2)`, `r myround(summary(mean.devtime.brms.em.contrast)[1,5],2)`\]; low density vs. high density: $\Delta$$\overline{x}$ = `r myround(summary(mean.devtime.brms.em.contrast)[2,3],2)` \[`r myround(summary(mean.devtime.brms.em.contrast)[2,4],2)`, `r myround(summary(mean.devtime.brms.em.contrast)[2,5],2)`; medium density vs high density: $\Delta$$\overline{x}$ = `r myround(summary(mean.devtime.brms.em.contrast)[3,3],2)` \[`r myround(summary(mean.devtime.brms.em.contrast)[3,4],2)`, `r myround(summary(mean.devtime.brms.em.contrast)[3,5],2)`). We also found that individuals raised on a poor diet required more time to develop than those raised on a good diet (Estimate = `r myround(mean.devtime.brms_fixed[[3,4]],2)`, \[`r myround(mean.devtime.brms_fixed[[3,6]],2)`, `r myround(mean.devtime.brms_fixed[[3,7]],2)`\]). 
-
-We did not find any significant two-way or three-way interactions involving pronotum length of adults (Table S). However, individuals had a larger pronotum when reared on a good diet versus a poor diet independent of rearing density (Estimate \[95% CrIs\] =`r myround(mean.pronotum.brms_fixed[[3,4]],3)` \[`r myround(mean.pronotum.brms_fixed[[3,6]],3)`, `r myround(mean.pronotum.brms_fixed[[3,7]],3)`\]) and males were smaller than females (Estimate =`r myround(mean.pronotum.brms_fixed[[2,4]],3)` \[`r myround(mean.pronotum.brms_fixed[[2,6]],3)`, `r myround(mean.pronotum.brms_fixed[[2,7]],3)`\]) (@fig-one b). 
-
-We found that forceps length was the result of a significant three-way interaction between sex, diet and density (Estimate = `r myround(mean.forceps.brms_fixed[[12,4]],3)` \[`r myround(mean.forceps.brms_fixed[[12,6]],3)`, `r myround(mean.forceps.brms_fixed[[12,7]],3)`\]) (@fig-one d). Post-hoc contrasts showed that this interaction is driven by a diet x density interaction in males with those reared at low-density differing from medium- (interaction contrast Estimate = `r myround(summary(mean.forceps.brms.em.contrast)[4,4],3)` \[`r myround(summary(mean.forceps.brms.em.contrast)[4,5],3)`, `r myround(summary(mean.forceps.brms.em.contrast)[4,6],3)`\]) and high- (Estimate = `r myround(summary(mean.forceps.brms.em.contrast)[5,4],3)` \[`r myround(summary(mean.forceps.brms.em.contrast)[5,5],3)`, `r myround(summary(mean.forceps.brms.em.contrast)[5,6],3)`\]) density males. Specifically, good-diet males reared at low density had smaller forceps than good-diet males reared at medium- (low vs medium density: $\Delta$$\overline{x}$ = `r myround(summary(mean.forceps.brms.em.a)$contrast[4,4],3)` \[`r myround(summary(mean.forceps.brms.em.a)$contrast[4,5],3)`, `r myround(summary(mean.forceps.brms.em.a)$contrast[4,6],3)`\]) or high- (low density vs. high density: $\Delta$$\overline{x}$ = `r myround(summary(mean.forceps.brms.em.a)$contrast[5,4],3)` \[`r myround(summary(mean.forceps.brms.em.a)$contrast[5,5],3)`, `r myround(summary(mean.forceps.brms.em.a)$contrast[5,6],3)`\]) density. The forceps length of poor-diet males did not differ acorss rearing densitieis (supp. table?). In contrast, forceps length in poor-diet females did not differ from that of good-diet females across all three densities (poor vs good diet averaged over density levels: Estimate = `r myround(summary(mean.for.dev.brms.em.f$contrasts)[2,2],3)` [`r myround(summary(mean.for.dev.brms.em.f$contrasts)[2,3],3)`, `r myround(summary(mean.for.dev.brms.em.f$contrasts)[2,4],3)`]). Sex had a large effect on forceps length with males having longer forceps than females (sex: Estimate = `r myround(mean.forceps.brms_fixed[[2,4]],3)` \[`r myround(mean.forceps.brms_fixed[[2,5]],3)`, `r myround(mean.forceps.brms_fixed[[2,6]],3)`\]).  
-
-An ANCOVA showed that relative forceps length exhibited very similar responses to sex, rearing diet and density as absolute forceps length (@fig-one d). We found a significant three-way interaction between sex, diet and density (ANCOVA, Estimate = `r myround(mean.relforceps.brms_fixed[[13,4]],3)` \[`r myround(mean.relforceps.brms_fixed[[13,6]],3)`, `r myround(mean.relforceps.brms_fixed[[13,7]],3)`\]) that was driven by a diet x density interaction in males with low-density males differing from medium- (interaction contrast Estimate = `r myround(summary(mean.relforceps.brms.em.contrast)[4,4],3)` \[`r myround(summary(mean.relforceps.brms.em.contrast)[4,5],3)`, `r myround(summary(mean.relforceps.brms.em.contrast)[4,6],3)`\]) and high- (Estimate = `r myround(summary(mean.relforceps.brms.em.contrast)[5,4],3)` \[`r myround(summary(mean.relforceps.brms.em.contrast)[5,5],3)`, `r myround(summary(mean.relforceps.brms.em.contrast)[5,6],3)`\]) density males. As with absolute forceps length, good-diet males reared at low density had smaller forceps than good-diet males reared at medium- (low vs medium density: $\Delta$$\overline{x}$ = `r myround(summary(mean.relforceps.brms.em.a)$contrast[4,4],3)` \[`r myround(summary(mean.relforceps.brms.em.a)$contrast[4,5],3)`, `r myround(summary(mean.relforceps.brms.em.a)$contrast[4,6],3)`\]) or high- (low density vs. high density: $\Delta$$\overline{x}$ = `r myround(summary(mean.relforceps.brms.em.a)$contrast[5,4],3)` \[`r myround(summary(mean.relforceps.brms.em.a)$contrast[5,5],3)`, `r myround(summary(mean.relforceps.brms.em.a)$contrast[5,6],3)`\]) density. Sex had a large effect on realtive forceps length with males having relatively longer forceps than females (sex: Estimate = `r myround(mean.forceps.brms_fixed[[2,4]],3)` \[`r myround(mean.forceps.brms_fixed[[2,5]],3)`, `r myround(mean.forceps.brms_fixed[[2,6]],3)`\]). Rearing density did not have a large effect on female investment in relative forceps length (see emmeans contrasts table in appendix) and diet affected relative forceps length in males only (sex x diet interaction: Estimate = `r myround(mean.relforceps.brms_fixed[[7,4]],3)` \[`r myround(mean.relforceps.brms_fixed[[7,6]],3)`, `r myround(mean.relforceps.brms_fixed[[7,7]],3)`\]).
-
-## Effect of development time on pronotum length and forceps length
-We used a mixed model having sex, diet, density as fixed factors and development time as a continuous predictor to investigate whether the relationship between pronotum length and development time differed among our experimental treatments. Our full model showed that pronotum length was not affected by a four-way interaction between sex, diet, density, and development time (Table Sx). A reduced model without the four-way interaction showed that pronotum length was influencedby a three-way interaction between sex, diet and development time (Estimate = `r myround(pro.dev_time.brms_fixed.2[[16,4]],3)` \[`r myround(pro.dev_time.brms_fixed.2[[16,6]],3)`, `r myround(pro.dev_time.brms_fixed.2[[16,7]],3)`\]) wherein pronotum length was negatively related to development time in both sexes when fed a poor diet (no difference between slopes:  $\Delta$$\overline{x}$ = `r myround(summary(mean.pro.dev.brms.em.d)$contrast[1,2],4)` [`r myround(summary(mean.pro.dev.brms.em.d)$contrast[1,3],4)`, `r myround(summary(mean.pro.dev.brms.em.d)$contrast[1,4],4)`]). However, when fed a good diet, male pronotum length was negatively related to development time, but female pronotum length was not ($\Delta$$\overline{x}$ = `r myround(summary(mean.pro.dev.brms.em.d)$contrast[6,2],3)` [`r myround(summary(mean.pro.dev.brms.em.d)$contrast[6,3],3)`, `r myround(summary(mean.pro.dev.brms.em.d)$contrast[6,4],3)`]).
-
-A full model showed that a four-way interaction between sex, diet, density and development time did not affect forceps length (Estimate = `r myround(for.dev_time.brms_fixed.1[[23,4]],3)` \[`r myround(for.dev_time.brms_fixed.1[[23,6]],3)`, `r myround(for.dev_time.brms_fixed.1[[23,7]],3)`\]). A reduced model, however, suggested that a three-way interaction between sex, density and development time affected forceps length (See Table Sx). Indeed, post-hoc contrasts showed that the difference between male and female slopes for the relationship between forceps length and development time became greater as density increased (low density: $\Delta$$\overline{x}$ = `r myround(summary(mean.for.dev.brms.em.d)$contrast[1,2],3)` [`r myround(summary(mean.for.dev.brms.em.d)$contrast[1,3],3)`, `r myround(summary(mean.for.dev.brms.em.d)$contrast[1,3],3)`]; medium density:$\Delta$$\overline{x}$ = `r myround(summary(mean.for.dev.brms.em.d)$contrast[10,2],3)` [`r myround(summary(mean.for.dev.brms.em.d)$contrast[10,3],3)`, `r myround(summary(mean.for.dev.brms.em.d)$contrast[10,3],3)`]; high density: $\Delta$$\overline{x}$ = `r myround(summary(mean.for.dev.brms.em.d)$contrast[15,2],3)` [`r myround(summary(mean.for.dev.brms.em.d)$contrast[15,3],3)`, `r myround(summary(mean.for.dev.brms.em.d)$contrast[15,3],3)`]), mostly owing to female slopes becoming shallower with increasing density (@fig-ten). We also found a significant three-way interaction between sex, diet and development time (Estimate = `r myround(for.dev_time.brms_fixed.2[[16,4]],3)` \[`r myround(for.dev_time.brms_fixed.2[[16,6]],3)`, `r myround(for.dev_time.brms_fixed.2[[16,7]],3)`\]), which is driven by a significant sex x diet interaction for earwigs fed a good diet (post-hoc contrast: Estimate = `r myround(summary(mean.for.dev.brms.em.e)$contrast[1,2],3)` [`r myround(summary(mean.for.dev.brms.em.e)$contrast[1,3],3)`, `r myround(summary(mean.for.dev.brms.em.e)$contrast[1,3],3)`]) but not when fed a poor diet (Estimate = `r myround(summary(mean.for.dev.brms.em.e)$contrast[6,2],3)` [`r myround(summary(mean.for.dev.brms.em.e)$contrast[6,3],3)`, `r myround(summary(mean.for.dev.brms.em.e)$contrast[6,3],3)`]). Visual examination of @fig-ten suggests that the slope for males increased on a good diet whereas the slope for females did not.
-
-Our full ANCOVA model (statistically controlling pronotum length) did not find that an interaction between sex, diet, density and development time affected relative forceps length (Table Sx). A reduced model, however, suggested that relative forceps length was affected by a three-way interaction between sex, density and developmental time (Table sx). Indeed, post-hoc contrasts showed that the relationship between relative forceps length and developmental time differed between the sexes at medium (Estimate = `r myround(summary(mean.relfor.dev.brms.em.d)$contrast[10,2],3)` [`r myround(summary(mean.relfor.dev.brms.em.d)$contrast[10,3],3)`, `r myround(summary(mean.relfor.dev.brms.em.d)$contrast[10,3],3)`]) and high density (Estimate = `r myround(summary(mean.relfor.dev.brms.em.d)$contrast[15,2],3)` [`r myround(summary(mean.relfor.dev.brms.em.d)$contrast[15,3],3)`, `r myround(summary(mean.relfor.dev.brms.em.d)$contrast[15,3],3)`]) but not at low density (Estimate = `r myround(summary(mean.relfor.dev.brms.em.d)$contrast[1,2],3)` [`r myround(summary(mean.relfor.dev.brms.em.d)$contrast[1,3],3)`, `r myround(summary(mean.relfor.dev.brms.em.d)$contrast[1,3],3)`]). 
-
-## Family-level effects on trait expression
-Our linear mixed model comparisons suggest the presence of GEIs in both sexes at all rearing densities for development time, forceps length and relative forceps length (@tbl-one; @fig-one to @fig-five). However, GEIs were generally absent for pronotum length suggesting that all families show the same plastic response to the nutritional environment across all rearing densities (@tbl-one). Although our analyses suggest that the effect of nutrition on trait expression depends to some extent on the family of origin (genetics), our reaction norm analysis suggests that the greatest proportion of phenotypic variance in development time can be attributed to average plastic responses to the nutritional environment. In contrast, approximately half of the phenotypic variance in pronotum and forceps lengths can be attributed to the nutritional environment, while the other half can be attributed to genetics (family of origin). The nutritional environment accounted for very little of the phenotypic variation in relative forceps length in males with almost none of the variation in females attributable to the environment. The sex difference in environmental effects on relative forceps length can be seen by inspecting the average reaction norms at each density (@fig-five); female reaction norms are horizontal (i.e. little effect of environment) whereas male average reaction norms have a positive slope (i.e. an effect of environment). Families appear to have differed in how they invested in forceps length relative to body size; which is indicated by the larger H^2 compared to P^2 for this trait in contrast to forceps and pronotum length.
-
-### Effect of rearing environment on morph expression
-
-## Proportion of macrolabic males
-We observed good-diet males becoming macrolabic and poor-diet males becoming brachylabic as expected (black and white symbols in Figure 4). However, we also unexpectedly observed poor-diet males becoming macrolabic and good-diet males becoming brachylabic (red symbols in Figure 4). Thirty females produced macrolabic sons on a poor diet and brachylabic sons on a good diet.
-
-The proportion of macrolabic males in a family was not dependent on an interaction between diet and density (see Supp. Material Table X; @fig-six). Families produced brachylabic and macrolabic males on both diets at each density but families had a greater proportion of macrolabic males when reared on a good diet versus a poor diet at all three rearing densities (Estimate = `r myround(prop.male.brms_fixed[[2,4]],2)` [`r myround(prop.male.brms_fixed[[2,6]],2)`, `r myround(prop.male.brms_fixed[[2,7]],2)`]; @fig-six).  Rearing density did not affect the proportion of macrolabic males produced on a poor diet (ass Table SX for post-hoc contrasts). However, when males were reared on a good diet, the proportion of macrolabic males was smaller low density than at medium (post-hoc contrast: $\Delta$$\overline{x}$ = `r myround(summary(prop.male.brms.em.b)$contrasts[1,3],2)` [`r myround(summary(prop.male.brms.em.b)$contrasts[1,4],2)`, `r myround(summary(prop.male.brms.em.b)$contrasts[1,5],2)`]) or high density. ($\Delta$$\overline{x}$ = `r myround(summary(prop.male.brms.em.b)$contrasts[2,3],2)` [`r myround(summary(prop.male.brms.em.b)$contrasts[2,4],2)`, `r myround(summary(prop.male.brms.em.b)$contrasts[2,5],2)`]). The proportion of macrolabic males in medium and high densities did not differ ($\Delta$$\overline{x}$ = `r myround(summary(prop.male.brms.em.b)$contrasts[3,3],2)` [`r myround(summary(prop.male.brms.em.b)$contrasts[3,4],2)`, `r myround(summary(prop.male.brms.em.b)$contrasts[3,5],2)`]).
-
-## Mean level effects on morphs
-We found that development time was not affected by three- or two-way interactions between our experimental factors and development time did not differ between morphs (Table Sx). Development time for brachylabic and macrolabic males, however, was strongly affected by diet with individuals requiring more time to reach adulthood on a poor diet (diet: Estimate = `r myround(devtime.pooled_fixed[[2,4]],2)` \[`r myround(devtime.pooled_fixed[[2,6]],2)`, `r myround(devtime.pooled_fixed[[2,7]],2)`\]; @fig-seven a). 
-
-Similarly, pronotum length was not affected by three- or two-way interactions between our experimental factors (Table Sx). As expected, diet had a large effect on pronotum length with good-diet males being larger than their poor-diet counterparts (diet: Estimate = `r myround(pronotum.pooled_fixed.2[[2,4]],2)` [`r myround(pronotum.pooled_fixed.2[[2,6]],2)`, `r myround(pronotum.pooled_fixed.2[[2,7]],2)`]; @fig-seven b). Macrolabic males had larger pronota than brachylabic males (Estimate = `r myround(pronotum.pooled_fixed.2[[5,4]],2)` [`r myround(pronotum.pooled_fixed.2[[5,6]],2)`, `r myround(pronotum.pooled_fixed.2[[5,7]],2)`]).
+We found a two-way interaction between diet and density (Estimate = `r myround(mean.devtime.brms_fixed[[10,4]],2)` \[`r myround(mean.devtime.brms_fixed[[10,6]],2)`, `r myround(mean.devtime.brms_fixed[[10,7]],2)`\]) that was driven by high density earwigs on a poor diet requiring more time than expected to reach adulthood (interaction contrast: low density vs medium density: $\Delta$$\overline{x}$ = `r myround(summary(mean.devtime.brms.em.contrast)[1,3],2)` \[`r myround(summary(mean.devtime.brms.em.contrast)[1,4],2)`, `r myround(summary(mean.devtime.brms.em.contrast)[1,5],2)`\]; low density vs. high density: $\Delta$$\overline{x}$ = `r myround(summary(mean.devtime.brms.em.contrast)[2,3],2)` \[`r myround(summary(mean.devtime.brms.em.contrast)[2,4],2)`, `r myround(summary(mean.devtime.brms.em.contrast)[2,5],2)`; medium density vs high density: $\Delta$$\overline{x}$ = `r myround(summary(mean.devtime.brms.em.contrast)[3,3],2)` \[`r myround(summary(mean.devtime.brms.em.contrast)[3,4],2)`, `r myround(summary(mean.devtime.brms.em.contrast)[3,5],2)`; @fig-one). We also found that individuals raised on a poor diet required more time to develop than those raised on a good diet (Estimate = `r myround(mean.devtime.brms_fixed[[3,4]],2)`, \[`r myround(mean.devtime.brms_fixed[[3,6]],2)`, `r myround(mean.devtime.brms_fixed[[3,7]],2)`\]).
 
 # Discussion
 
-
- 
-
-
-
-
-
-# Data availability
-
-Data are available through the OSF repository at 10.17605/OSF.IO/MFJ8E.
-
-# Author contributions
-
-CDK collected and analyzed the data, and wrote the manuscript.
-
-# Funding
-
-The study was funded by the the Canada Research Chairs program and Natural Sciences and Engineering Research Council of Canada (NSERC) Discovery Grants.
-
-# Conflict of Interest
-
-I declare no conflict of interest.
-
-# Acknowledgements
-
-I thank New Zealand's Department of Conservation for study permits, the many managers and rangers of Maud Island. I also thank Darryl Gwynne and Sarah Nason for help in the field.
 
 \newpage
 
@@ -159,44 +83,12 @@ block_section(
 )
 ```
 
-\newpage
-
-```{r}
-#| echo: false
-#| results: asis
-#| warning: FALSE
-#| label: tbl-one
-#| tbl-cap: The number of families and total number of offspring in those families for females and males raised on either a poor or good diet at low, medium, or high denisty.
-
-my_header <- data.frame(
-  col_keys = c("sex", "density", "nf", "no"),
-  line2 = c("","","",""),
-  stringsAsFactors = FALSE)
-
-flextable(table_1,col_keys = c("sex", "density", "nf", "no")) %>%
-  flextable::set_header_df(
-    mapping = my_header,
-    key = "col_keys"
-  ) %>%
-  flextable::set_header_labels(sex="Sex", density="Density", nf="nf", no="no") %>%
-  merge_h(part = "header") %>%
-  flextable::align(align = "left", part = "body") %>%
-  flextable::compose(part = "header", i= 1, j =3, value = as_paragraph(("N"), as_sub("families"))) %>%
-  flextable::compose(part = "header", i= 1, j =4, value = as_paragraph(("N"), as_sub("offspring"))) %>%
-  hline(i=1, j=c(1:4), part="header",border=fp_border(color="black", width=1.5)) %>%
-  flextable::bold(part="header") %>% 
-  autofit() %>%
-  fit_to_width(max_width = 9)
-```
-
-\newpage
-
 ```{r}
 #| echo: false
 #| results: asis
 #| warning: FALSE
 #| label: tbl-two
-#| tbl-cap: Phenotypic variance partitioning of four traits for female and male European earwig (*Forficula auricularia*) families raised on either a poor or good diet at low, medium, or high density. P2RN is the proportion of the phenotypic variance arising from average plastic responses to to the nutritional environment, H2RN is the broad-sense heritability of the trait when fully accounting for its reaction norm, and T2RN is the proportion of the phenotypic variance explained by the plastic and genetically variable reaction norm. Numbers in brackets are 95% credible intervals (CrIs).
+#| tbl-cap: Phenotypic variance partitioning of four traits for female and male European earwig (*Forficula auricularia*) families raised on either a poor or good diet at low, medium, or high density. P^2^~RN~ is the proportion of the phenotypic variance arising from average plastic responses to to the nutritional environment, H^2^~RN~ is the broad-sense heritability of the trait when fully accounting for its reaction norm, and T^2^~RN~ is the proportion of the phenotypic variance explained by the plastic and genetically variable reaction norm. Numbers in brackets are 95% credible intervals (CrIs).
 
 my_header <- data.frame(
   col_keys = c("variable", "f.mean.dev", "f.mean.pro", "f.mean.for", "f.mean.relfor", "break1", "m.mean.dev", "m.mean.pro", "m.mean.for", "m.mean.relfor"),
@@ -252,15 +144,4 @@ block_section(
 
 ##Figures
 
-![Mean (±95% CrI) trait sizes of female and male earwigs raised on either a poor or good diet at low, medium, or high density. * above bracket denotes that the 95% CrI of the mean difference between two density levels did not include zero whereas NS denotes that the 95% CrI of the mean difference did include zero. See @tbl-one for sample sizes.](figure_1.jpg){#fig-one}
-
-![Relationship between development time (days) and (a) pronotum length, (b) forceps length, and (c) relative forceps length for female and male earwigs raised on either a poor or good diet. Density levels are pooled. See @tbl-one for sample sizes.](figure_2.jpg){#fig-two}
-
-![Reaction norms for family-level mean forceps length (mm) for females and males raised on either a poor or good diet at low, medium, or high density. Red lines represent diet-level mean size. See @tbl-one for sample sizes.](figure_3.jpg){#fig-three}
-
-![Relationship between forceps length and pronotum length for females and brachylabic and macrolabic males reared at low, medium, or gih density and on a poor or good diet. Density plots showing forcpes length distribution are shown to the right for each sex.](figure_4.jpg){#fig-four}
-
-![Mean (±95% CrI) proportion of sons in a family that are macrolabic according to their rearing diet and density. * above bracket denotes that the 95% CrI of the mean difference between two density levels did not include zero whereas NS denotes that the 95% CrI of the mean difference did include zero. Sample sizes (number of families) are given below each lower credible interval.](figure_5.jpg){#fig-five}
-
-![Mean (±95% CrI) (a) development time (days) and (b) pronotoum length for brachylabic and macrolabic males reared at one of three densities and on either a poor or a good diet. Samples sizes are above points in panel a.](figure_6.jpg){#fig-six}
-
+![Mean (±95% CrI) trait sizes of female and male earwigs raised on either a poor or good diet at low, medium, or high density. * above bracket denotes that the 95% CrI of the mean difference between two density levels did not include zero whereas NS denotes that the 95% CrI of the mean difference did include zero. Sample sizes are given below data points.](figure_1.jpg){#fig-one}

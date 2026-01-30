@@ -49,29 +49,27 @@ library(broom)
 library(huxtable)
 library(glue)
 library(ggside)
+library(ggpubr)
 ## ---- end
 
 ## ---- data_prep ----
 
 load(file ="data/mean.sex.data.Rda")
 load(file ="data/plasticity.table.Rda")
-load(file ="data/mean.devtime.brms.Rds")
+mean.devtime.brms <- readRDS(file ="data/mean.devtime.brms.rds")
 
 ## ---- end
 
 ## ---- plot_table ----
 
-### PLOT ###
-
-sex.labs <- c("Females", "Males")
-names(sex.labs) <- c("female", "male")
+### ANALYSIS ###
 
 # devtime
 mean.devtime.brms <- brm(dev_time ~ sex*diet*density + (1 | id_mere),
                          data = mean.sex.data, warmup = 500, iter = 3000, thin=2,
                          control = list(max_treedepth = 15, adapt_delta = 0.99),
                          sample_prior = TRUE,
-                         file = "data/mean.devtime.brms.Rds",
+                         file = "data/mean.devtime.brms.rds",
                          chains = 4, seed = 12345, cores = 4)
 summary(mean.devtime.brms)
 conditional_effects(mean.devtime.brms)
@@ -91,8 +89,11 @@ mean.sex.data.n <- mean.sex.data %>%
   group_by(diet, density, sex) %>%
   summarise(n=n())
 
-library(ggpubr)
-# dev time plot
+### PLOT ###
+
+sex.labs <- c("Females", "Males")
+names(sex.labs) <- c("female", "male")
+
 dev.pvalues <- tibble::tribble(
   ~sex, ~diet, ~group1, ~group2, ~p.adj, ~y.position,
   "female", "POOR", "1", "4", "*", 70.5, 
